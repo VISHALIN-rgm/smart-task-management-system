@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Teams | STMS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: white;
+    }
+    .sidebar {
+      height: 100vh;
+      background-color: #2d2f3e;
+      padding-top: 20px;
+    }
+    .sidebar h4 {
+      color: #fff;
+      padding-left: 20px;
+    }
+    .sidebar a {
+      display: block;
+      color: #ddd;
+      padding: 10px 20px;
+      text-decoration: none;
+    }
+    .sidebar a:hover {
+      background-color: #444654;
+    }
+    .container-main {
+      padding: 40px;
+    }
+    .card {
+      background-color: #2a2a2a;
+      border: none;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 sidebar">
+      <h4>HR Panel</h4>
+      <a href="{% url 'hr_dashboard' %}">📊 Dashboard</a>
+      <a href="{% url 'manage_employees' %}">👥 Employees</a>
+      <a href="{% url 'team_list' %}">👨‍👩‍👧‍👦 Teams</a>
+      <a href="{% url 'assign_employee_list' %}">📝 Assign</a>
+      <a href="{% url 'logout' %}">🚪 Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9 container-main">
+      <h2 class="mb-4 text-info">👥 All Teams</h2>
+
+      {% if teams %}
+        <div class="row">
+          {% for team in teams %}
+            <div class="col-md-6 mb-4">
+              <div class="card p-3 shadow-sm">
+                <h5 class="card-title">{{ team.name }}</h5>
+                <p><strong>Created By:</strong> {{ team.created_by.username }}</p>
+                <p><strong>Members:</strong>
+                  {% for member in team.members.all %}
+                    {{ member.username }}{% if not forloop.last %}, {% endif %}
+                  {% empty %}
+                    No members
+                  {% endfor %}
+                </p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p>No teams found.</p>
+      {% endif %}
+
+      <a href="{% url 'hr_dashboard' %}" class="btn btn-outline-light mt-4">Back to HR Dashboard</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

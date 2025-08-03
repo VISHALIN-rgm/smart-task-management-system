@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manager Dashboard | STMS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      display: flex;
+    }
+    .sidebar {
+      width: 220px;
+      height: 100vh;
+      background-color: #1f3557;
+    }
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      margin: 15px 0;
+    }
+    .sidebar a:hover {
+      background-color: #123456;
+      padding-left: 10px;
+      transition: all 0.3s;
+    }
+    .content {
+      flex: 1;
+      padding: 30px;
+      background: #f8f9fa;
+    }
+    .card {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar p-3 text-white">
+    <h4>📋 Manager Panel</h4>
+    <a href="{% url 'manager_dashboard' %}">📊 Dashboard</a>
+    <a href="{% url 'manager_projects' %}">📁 Projects</a>
+    <a href="{% url 'manager_tasks' %}">📝 Tasks</a>
+    <a href="{% url 'manager_teams' %}">👥 Teams</a>
+    <a href="{% url 'manager_reports' %}">📄 Reports</a>
+    <a href="{% url 'logout' %}">🚪 Logout</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <h2>Welcome to the Manager Dashboard</h2>
+
+    <!-- Summary Cards -->
+    <div class="row mt-4">
+      <div class="col-md-4">
+        <div class="card p-3 text-center">
+          <h5>🧑‍💼 Total Employees</h5>
+          <h2>{{ employee_count }}</h2>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-3 text-center">
+          <h5>👥 Total Teams</h5>
+          <h2>{{ team_count }}</h2>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-3 text-center">
+          <h5>📁 Total Projects</h5>
+          <h2>{{ project_count }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="row mt-5">
+      <div class="col-md-6">
+        <div class="card p-3">
+          <h5>📊 Task Status Overview</h5>
+          <canvas id="taskStatusChart" height="200"></canvas>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3">
+          <h5>✅ Project Completion</h5>
+          <canvas id="projectProgressChart" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart.js Scripts -->
+  <script>
+    // Task Status Chart
+    const ctxTask = document.getElementById('taskStatusChart').getContext('2d');
+    new Chart(ctxTask, {
+      type: 'bar',
+      data: {
+        labels: ['To Do', 'In Progress', 'Completed'],
+        datasets: [{
+          label: 'Tasks',
+          data: [8, 12, 5],  // Replace with dynamic values from view
+          backgroundColor: ['#f94144', '#f8961e', '#43aa8b']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+
+    // Project Progress Chart
+    const ctxProgress = document.getElementById('projectProgressChart').getContext('2d');
+    new Chart(ctxProgress, {
+      type: 'doughnut',
+      data: {
+        labels: ['Completed', 'Remaining'],
+        datasets: [{
+          label: 'Progress',
+          data: [65, 35],  // Replace with dynamic values from view
+          backgroundColor: ['#2a9d8f', '#e9c46a']
+        }]
+      },
+      options: {
+        cutout: '70%',
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

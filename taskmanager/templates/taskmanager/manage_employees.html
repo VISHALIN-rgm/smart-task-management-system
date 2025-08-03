@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Employees | STMS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1c1c1c;
+            color: #ffffff;
+        }
+        .sidebar {
+            height: 100vh;
+            background-color: #2d2f3e;
+            padding-top: 20px;
+        }
+        .sidebar h4 {
+            color: #ffffff;
+            padding-left: 20px;
+        }
+        .sidebar a {
+            display: block;
+            color: #ccc;
+            padding: 10px 20px;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            background-color: #3a3f52;
+        }
+        .container-main {
+            padding: 40px;
+        }
+        .table-dark th {
+            background-color: #343a40;
+            color: #fff;
+        }
+        .table td {
+            color: #fff;
+        }
+        .table {
+            background-color: #2a2a2a;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 sidebar">
+            <h4>HR Panel</h4>
+            <a href="{% url 'hr_dashboard' %}">📊 Dashboard</a>
+            <a href="{% url 'manage_employees' %}">👥 Employees</a>
+            <a href="{% url 'team_list' %}">👨‍👩‍👧‍👦 Teams</a>
+            <a href="{% url 'assign_employee_list' %}">📝 Assign</a>
+            <a href="{% url 'logout' %}">🚪 Logout</a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 container-main">
+            <h2 class="mb-4 text-info">👥 Employee List</h2>
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Professional Background</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for employee in employees %}
+                    <tr>
+                        <td>{{ employee.username }}</td>
+                        <td>{{ employee.email }}</td>
+                        <td>{{ employee.professional_background }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3">No employees found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <a href="{% url 'hr_dashboard' %}" class="btn btn-outline-light mt-3">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

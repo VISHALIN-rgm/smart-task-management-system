@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Task | STMS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: #1c1f26;
+            color: white;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #2b2f3a;
+            height: 100vh;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            background-color: #444;
+        }
+        .content {
+            flex: 1;
+            padding: 30px;
+        }
+        .form-control {
+            background-color: #333;
+            color: white;
+            border: 1px solid #555;
+        }
+        .form-control:focus {
+            background-color: #444;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h4 class="text-center text-white mb-4">📋 Manager Panel</h4>
+        <a href="{% url 'manager_dashboard' %}">📊 Dashboard</a>
+        <a href="{% url 'manager_projects' %}">📁 Projects</a>
+        <a href="{% url 'manager_tasks' %}">📝 Tasks</a>
+        <a href="{% url 'manager_teams' %}">👥 Teams</a>
+        <a href="{% url 'manager_reports' %}">📄 Reports</a>
+        <a href="{% url 'logout' %}">🚪 Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <h2>Create New Task</h2>
+        <hr class="text-secondary">
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Title</label>
+                <input type="text" name="title" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea name="description" class="form-control" rows="3" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Project (type manually)</label>
+                <input type="text" name="project" class="form-control" placeholder="Project Name or ID" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Assign To (username)</label>
+                <input type="text" name="assigned_to" class="form-control" placeholder="Employee Username" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Due Date</label>
+                <input type="date" name="due_date" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Status (type: Pending/In Progress/Completed)</label>
+                <input type="text" name="status" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create Task</button>
+            <a href="{% url 'manager_tasks' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+
+</body>
+</html>

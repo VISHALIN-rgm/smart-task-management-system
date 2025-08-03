@@ -1,0 +1,25 @@
+<!-- accounts/templates/accounts/edit_employee.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Employee</title>
+</head>
+<body>
+    <h2>Edit Employee</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label>Username:</label>
+        <input type="text" name="username" value="{{ employee.username }}" required><br>
+
+        <label>Email:</label>
+        <input type="email" name="email" value="{{ employee.email }}" required><br>
+
+        <label>Professional Background:</label>
+        <input type="text" name="professional_background" value="{{ employee.professional_background }}"><br>
+
+
+
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>

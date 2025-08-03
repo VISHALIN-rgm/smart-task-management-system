@@ -1,0 +1,14 @@
+# Python/Django
+*.pyc
+__pycache__/
+db.sqlite3
+.env
+/staticfiles/
+/media/
+*.log
+
+# VS Code
+.vscode/
+
+# Mac/Linux
+.DS_Store

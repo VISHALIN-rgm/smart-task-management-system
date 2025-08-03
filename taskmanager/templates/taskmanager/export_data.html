@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Export Employee Data | STMS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      margin: 0;
+    }
+
+    .sidebar {
+      height: 100vh;
+      width: 250px;
+      background-color: #1f1f1f;
+      padding: 20px;
+      position: fixed;
+    }
+
+    .sidebar h4 {
+      color: #00bcd4;
+      margin-bottom: 30px;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #bbb;
+      text-decoration: none;
+      padding: 10px 0;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+      color: white;
+      background-color: #343a40;
+      padding-left: 10px;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 50px;
+    }
+
+    .card {
+      background-color: #1e1e1e;
+      border: none;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .btn-export {
+      background-color: #28a745;
+      border: none;
+    }
+
+    .btn-export:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <div class="d-flex">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h4>HR Panel</h4>
+      <a href="{% url 'hr_dashboard' %}">📊 Dashboard</a>
+      <a href="{% url 'manage_employees' %}">👥 Employees</a>
+      <a href="{% url 'team_list' %}">👨‍👩‍👧‍👦 Teams</a>
+      <a href="{% url 'assign_employee_list' %}">📝 Assign</a>
+      <a href="{% url 'logout' %}">🚪 Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content w-100">
+      <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card w-50 text-center text-white">
+          <h3 class="mb-4 text-success">📤 Export Employee Data</h3>
+          <p>You can export the list of all employees as a CSV file using the button below.</p>
+          <a href="{% url 'export_employees' %}" class="btn btn-export btn-lg mt-3">Download CSV</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

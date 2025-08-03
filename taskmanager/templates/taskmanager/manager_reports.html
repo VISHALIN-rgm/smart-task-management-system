@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manager Reports | STMS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background-color: #f4f6f8;
+    }
+    .sidebar {
+      height: 100vh;
+      background-color: #1d3557;
+    }
+    .sidebar a {
+      color: white;
+      display: block;
+      padding: 15px;
+      text-decoration: none;
+    }
+    .sidebar a:hover {
+      background-color: #457b9d;
+    }
+    .card {
+      border-radius: 12px;
+      border: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+<div class="d-flex">
+  <!-- Sidebar -->
+  <div class="sidebar p-3 text-white">
+    <h4>📋 Manager Panel</h4>
+    <a href="{% url 'manager_dashboard' %}">📊 Dashboard</a>
+    <a href="{% url 'manager_projects' %}">📁 Projects</a>
+    <a href="{% url 'manager_tasks' %}">📝 Tasks</a>
+    <a href="{% url 'manager_teams' %}">👥 Teams</a>
+    <a href="{% url 'manager_reports' %}">📄 Reports</a>
+    <a href="{% url 'logout' %}">🚪 Logout</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="flex-grow-1 p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>Reports & Analytics</h2>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row g-4 mb-4">
+      <div class="col-md-3">
+        <div class="card p-3 bg-light">
+          <h6>Total Tasks</h6>
+          <h4>{{ total_tasks }}</h4>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card p-3 bg-light">
+          <h6>Completed Tasks</h6>
+          <h4>{{ completed_tasks }}</h4>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card p-3 bg-light">
+          <h6>Pending Tasks</h6>
+          <h4>{{ pending_tasks }}</h4>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card p-3 bg-light">
+          <h6>Teams</h6>
+          <h4>{{ total_teams }}</h4>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="card p-4">
+      <h5 class="mb-3">Task Completion Overview</h5>
+      <canvas id="taskChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<script>
+  const ctx = document.getElementById('taskChart').getContext('2d');
+  const taskChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Completed', 'Pending'],
+      datasets: [{
+        label: 'Task Status',
+        data: [{{ completed_tasks }}, {{ pending_tasks }}],
+        backgroundColor: ['#28a745', '#ffc107'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true
+    }
+  });
+</script>
+
+</body>
+</html>

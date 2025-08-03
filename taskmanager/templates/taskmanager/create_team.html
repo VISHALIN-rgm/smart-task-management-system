@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Team | STMS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #343a40;
+      color: white;
+      padding-top: 30px;
+      height: 100vh;
+      position: fixed;
+    }
+    .sidebar a {
+      color: white;
+      padding: 12px 20px;
+      display: block;
+      text-decoration: none;
+    }
+    .sidebar a:hover {
+      background-color: #495057;
+    }
+    .main-content {
+      margin-left: 250px;
+      padding: 30px;
+      background-color: #f8f9fa;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar p-3 text-white">
+    <h4>📋 Manager Panel</h4>
+    <a href="{% url 'manager_dashboard' %}">📊 Dashboard</a>
+    <a href="{% url 'manager_projects' %}">📁 Projects</a>
+    <a href="{% url 'manager_tasks' %}">📝 Tasks</a>
+    <a href="{% url 'manager_teams' %}">👥 Teams</a>
+    <a href="{% url 'manager_reports' %}">📄 Reports</a>
+    <a href="{% url 'logout' %}">🚪 Logout</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="container">
+      <h2 class="mb-4">Create New Team</h2>
+      <div class="card p-4 shadow-sm">
+        <form method="post">
+          {% csrf_token %}
+          
+          <div class="mb-3">
+            <label for="id_name" class="form-label">Team Name</label>
+            <input type="text" name="name" class="form-control" id="id_name" placeholder="Enter team name" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="id_description" class="form-label">Description</label>
+            <textarea name="description" class="form-control" id="id_description" rows="4" placeholder="Enter team description"></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="id_members" class="form-label">Assign Members</label>
+            <select name="members" multiple class="form-control" id="id_members">
+              {% for user in form.fields.members.queryset %}
+                <option value="{{ user.id }}">{{ user.username }}</option>
+              {% endfor %}
+            </select>
+            <small class="text-muted">Hold Ctrl (or ⌘ on Mac) to select multiple users.</small>
+          </div>
+
+          <button type="submit" class="btn btn-success">Create Team</button>
+          <a href="{% url 'manager_teams' %}" class="btn btn-secondary ms-2">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
